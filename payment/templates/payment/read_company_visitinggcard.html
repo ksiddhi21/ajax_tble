@@ -1,0 +1,87 @@
+{% load widget_tweaks %}
+
+<div class="modal-header">
+  <h3 class="modal-title">Visiting Card details</h3>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+
+  <div class="">
+    Company Name:
+    {{ visiting_card.visitingcardcompanydata_company_name }}
+  </div>
+  <br>
+  <div class="">
+    Agent Name:
+    {{ visiting_card.visitingcardcompanydata_agent_name }}
+  </div>
+  <br>
+  <div class="">
+    Agent Destination:
+    {{ visiting_card.visitingcardcompanydata_agent_designation }}
+    
+  </div>
+  <br>
+  <div class="">
+    Company Address1:
+    {{ visiting_card.visitingcardcompanydata_company_address1 }}
+    
+  </div>
+  <br>
+   <div class="">
+    Company Address2:
+    {{ visiting_card.visitingcardcompanydata_company_address2 }}
+    
+  </div>
+  <br>
+  
+  <div class="">
+    Telephone No.1:
+    {{ visiting_card.visitingcardcompanydata_tel_number1 }}
+    
+  </div>
+  <br>
+  <div class="">
+    Telephone No.2:
+    {{ visiting_card.visitingcardcompanydata_tel_number2 }}
+    
+  </div>
+  <br>
+  <div class="">
+    Mobile No.1:
+    {{ visiting_card.visitingcardcompanydata_mobile_number1 }}
+    
+  </div>
+  <br>
+  <div class="">
+    Mobile No.2:
+    {{ visiting_card.visitingcardcompanydata_mobile_number2 }}
+    
+  </div>
+  <br>
+  <div class="">
+    Email id1:
+    {{ visiting_card.visitingcardcompanydata_email_id1 }}
+    
+  </div>
+  <br>
+  <div class="">
+    Email id2:
+    {{ visiting_card.visitingcardcompanydata_email_id2 }}
+    
+  </div>
+  <br>
+  <div class="">
+    Company Website:
+    {{ visiting_card.visitingcardcompanydata_company_website }}
+    
+  </div>
+
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>

@@ -1,0 +1,28 @@
+{% load widget_tweaks %}
+
+<form method="post" action="">
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h3 class="modal-title">Update Entry</h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    {% comment %} {% for field in form %} {% endcomment %}
+      <div class="form-group">
+        <label for="visitingcardagencydata_agency_name">visitingcardagencydata_agency_name</label>
+        <input class="form-control" id="visitingcardagencydata_agency_name" type="text "placeholder="visitingcardagencydata_agency_name" />
+        </div>
+      </div>
+    {% comment %} {% endfor %} {% endcomment %}
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="submit-btn btn btn-primary">Update</button>
+  </div>
+
+</form>

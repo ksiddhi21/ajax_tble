@@ -1,0 +1,68 @@
+{% load widget_tweaks %}
+
+<div class="modal-header">
+  <h3 class="modal-title">Visiting Card details</h3>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+
+  <div class="">
+    Agency Name:
+    {{ visiting_card.visitingcardagencydata_agency_name }}
+  </div>
+  <br>
+  <div class="">
+    Agent Name:
+    {{ visiting_card.visitingcardagencydata_agent_name }}
+  </div>
+  <br>
+  <div class="">
+    Agent Destination:
+    {{ visiting_card.visitingcardagencydata_agent_designation }}
+    
+  </div>
+  <br>
+  <div class="">
+    Agent Address:
+    {{ visiting_card.visitingcardagencydata_agency_address }}
+    
+  </div>
+  <br>
+  <div class="">
+    Agency City:
+    {{ visiting_card.visitingcardagencydata_agency_city }}
+    
+  </div>
+  <br>
+  <div class="">
+    Telephone:
+    {{ visiting_card.visitingcardagencydata_tel_numbers }}
+    
+  </div>
+  <br>
+  <div class="">
+    Mobile:
+    {{ visiting_card.visitingcardagencydata_mobile_numbers }}
+    
+  </div>
+  <br>
+  <div class="">
+    Email:
+    {{ visiting_card.visitingcardagencydata_email_address }}
+    
+  </div>
+  <br>
+  <div class="">
+    Agency Website:
+    {{ visiting_card.visitingcardagencydata_agency_website }}
+    
+  </div>
+
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>

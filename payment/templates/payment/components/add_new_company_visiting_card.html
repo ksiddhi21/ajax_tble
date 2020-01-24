@@ -1,0 +1,119 @@
+<div class="modal fade" id="add_visiting_card" tabindex="-1" role="dialog" aria-labelledby="add_statusModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lead_satus_modal">Add New Visiting Card</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+    
+                <div class="modal-body">
+                    <form action="{% url 'payment:add_new_company_visiting_card'%}" method="post">
+    
+                        {% csrf_token %}
+                        <div>
+                            <div>
+                                <label for="company_name_lbl">Company Name:</label>
+                                 <input type="text" class="form-control" id="visitingcardcompanydata_company_name" name="visitingcardcompanydata_company_name" placeholder="Enter Company Name"> 
+            
+                            </div>
+                            <br>
+                            <div>
+                                <label for="agent_name_lbl">Agent Name:</label>
+                                 <input type="text" class="form-control" id="visitingcardcompanydata_agent_name" name="visitingcardcompanydata_agent_name" placeholder="Enter Agent Name"> 
+            
+                            </div>
+                            <br>
+                            <div>
+                                <label for="agent_designation_lbl">Agent Designation:</label>
+                                 <input type="text" class="form-control" id="visitingcardcompanydata_agent_designation" name="visitingcardcompanydata_agent_designation" placeholder="Enter Agent Designation"> 
+            
+                            </div>
+                            <br>
+                             <div class="form-row">
+                               <div class="form-group col-md-6">
+                                 <label for="company_add1_lbl">Company Address1:</label>
+                                   <textarea class="form-control" id="visitingcardcompanydata_company_address1" name="visitingcardcompanydata_company_address1"></textarea>
+                               </div>
+                           <div class="form-group col-md-6">
+                                <label for="company_add2_lbl">Company Address2: </label>
+                               <textarea type="text" class="form-control" id="visitingcardcompanydata_company_address2" name="visitingcardcompanydata_company_address2"></textarea>
+                           </div>
+               
+                           </div>
+                            <br>
+                             <div class="form-row">
+                               <div class="form-group col-md-6">
+                                  <label for="tel_no1_lbl">Telephone No.1:</label>
+                                  <input type="text" class="form-control" id="visitingcardcompanydata_tel_number1" name="visitingcardcompanydata_tel_number1" placeholder="Enter Telephone No.1">
+                              </div>
+                                 <div class="form-group col-md-6">
+                                 <label for="tel_no2_lbl">Telephone No.2:</label>
+                                 <input type="text" class="form-control" id="visitingcardcompanydata_tel_number2" name="visitingcardcompanydata_tel_number2"placeholder="Enter Telephone No.2">
+                            </div>
+               
+                           </div>
+                            <br>
+                            <div class="form-row">
+                               <div class="form-group col-md-6">
+                                  <label for="mobile_no1_lbl">Mobile No.1:</label>
+                                  <input type="text" class="form-control" id="visitingcardcompanydata_mobile_number1" name="visitingcardcompanydata_mobile_number1" placeholder="Enter Mobile No.1">
+                              </div>
+                                 <div class="form-group col-md-6">
+                                 <label for="mobile_no2_lbl">Mobile No.2:</label>
+                                 <input type="text" class="form-control" id="visitingcardcompanydata_mobile_number2" name="visitingcardcompanydata_mobile_number2"placeholder="Enter Mobile No.2">
+                            </div>
+               
+                           </div>
+                            <br>
+                            <div class="form-row">
+                               <div class="form-group col-md-6">
+                                  <label for="email_id1_lbl">Email id1:</label>
+                                  <input type="text" class="form-control" id="visitingcardcompanydata_email_id1" name="visitingcardcompanydata_email_id1" placeholder="Enter Email id1">
+                              </div>
+                                 <div class="form-group col-md-6">
+                                 <label for="email_id2_lbl">Email id2:</label>
+                                 <input type="text" class="form-control" id="visitingcardcompanydata_email_id2" name="visitingcardcompanydata_email_id2"placeholder="Enter Email id2">
+                            </div>
+               
+                           </div>
+                            <br>
+                            <div>
+                                <label for="company_website_lbl">Company Website:</label>
+                                <input type="text" class="form-control" id="visitingcardcompanydata_company_website" name="visitingcardcompanydata_company_website" placeholder="Enter Company Website">
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                   <label for="send_sms">Send SMS</label>
+                                   	<select id='send_sms' name='send_sms' >
+                                       <option value=0>No</option>
+										{% for sms in sms_master %}
+										<option value={{sms.pk}}>{{sms.SMS_Subject}}</option>
+										{% endfor %}
+									</select>
+
+                                   </select>
+                                   </div>
+                                  <div class="form-group col-md-6">
+                                  <label for="send_email">Send Mail</label>
+                                  <select class="form-control">
+
+                                    <option>Coming Soon</option>
+                                    
+                                   </select>
+                             </div>
+                
+                            </div>
+
+                        </div>
+                        <br>
+                        <br>
+                        <button type="submit" class="submit-btn btn btn-primary">Add</button>
+    
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,195 @@
+{% extends 'payment/base.html' %}
+
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+{% endblock stylesheets %}
+
+
+{% block content %}
+
+<div id="content" style="margin_left:20px; margin_right:">
+
+{% comment %} <form action={% url 'payment:group_description_form_submit' %} method="post">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="col">
+                        <label for="VT Ref. No.">VT Ref. No.</label>
+                        <input type="text" class="form-control" id="groupdescription_vtrefNo" onclick="myFunction2()" name="groupdescription_vtrefNo">
+                    </div>
+                    
+
+                    <div class="col">
+                        <label for="Client Name">Client Name</label>
+                        <div class="form-group">
+                            <select class="form-control" id="groupdescription_client_id" name="groupdescription_client_id">
+                                {% for client in clients %}
+                                <option value={{ client.pk }}>{{ client.client_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col">
+                        <label for="No. of Passengers ( Paid )">No. of Passengers ( Paid )</label>
+                        <input type="number" class="form-control" id="groupdescription_number_of_passengers_paid" name="groupdescription_number_of_passengers_paid">
+                    </div>
+                    <div class="col">
+                        <label for="No. of Passengers ( Free )">No. of Passengers ( Free )</label>
+                        <input type="number" class="form-control" min="0" id="groupdescription_number_of_passengers_free" name="groupdescription_number_of_passengers_free">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label for="groupdescription_start_date">Traveling Start Date</label>
+                        <input type="date" class="form-control" id="groupdescription_start_date" name="groupdescription_start_date">
+                    </div>
+                    <div class="col">
+                        <label for="groupdescription_end_date">Traveling End Date</label>
+                        <input type="date" class="form-control" id="groupdescription_end_date" name="groupdescription_end_date">
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label for="groupdescription_destination">Destination</label>
+                        <input type="text" class="form-control" id="groupdescription_destination" name="groupdescription_destination">
+                    </div>
+                    <div class="col">
+                        <label for="groupdescription_number_of_days">No. of Days</label>
+                        <input type="number" min="1" class="form-control" id="groupdescription_number_of_days" onclick="myFunction1()" name="groupdescription_number_of_days" readonly>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col">
+                        <label for="Volshebny Handle Person">Volshebny Handle Person</label>
+                        <input type="text" class="form-control" id="groupdescription_volshebny_handle_person" name="groupdescription_volshebny_handle_person">
+                    </div>
+
+                    <div class="col">
+                        <label for="Client Handle Person">Client Handle Person</label>
+                        <input type="text" class="form-control" id="groupdescription_client_handle_person" name="groupdescription_client_handle_person">
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+                    <div class="col">
+                        <label for="Booking Date">Booking Date</label>
+                        <input type="date" class="form-control" id="groupdescription_booking_date" name="groupdescription_booking_date">
+                    </div>
+
+                    <div class="col">
+                        <label for="Confirmation Date">Confirmation Date</label>
+                        <input type="date" class="form-control" id="groupdescription_confirmation_date" name="groupdescription_confirmation_date">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label for="groupdescription_roe">ROE</label>
+                        <input type="number" min=1 class="form-control" id="groupdescription_roe" name="groupdescription_roe">
+                    </div>
+                    <div class="col">
+                        <label for="temp_amount">Amount</label>
+                        <input type="number" min=1 class="form-control" id="temp_amount" name="temp_amount">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label for="groupdescription_amount">Total Amount</label>
+                        <input type="number" min=1 class="form-control" id="groupdescription_amount" name="groupdescription_amount" onclick="myFunction3()" readonly>
+                    </div>
+                    <div class="col">
+                        <label for="group_description_service_calculation_type">Service Calculation Type</label>
+                        
+                        <select class="form-control" id="group_description_service_calculation_type" name="group_description_service_calculation_type">
+                                    <option value="INCLUSIVE">INCLUSIVE</option>
+                                    <option value="EXCLUSIVE">EXCLUSIVE</option>
+
+                                </select>
+                    </div>
+                </div>
+                    
+                    <div>
+                        <label for="Payment Method">Payment Method</label>
+                        <input type="text" class="form-control" id="groupdescription_payment_method" name="groupdescription_payment_method">
+                    </div>
+                
+                
+                    
+                
+
+                <br>
+                <input type="submit" class="btn btn-info btn-block" value="Save Tour Details and Services"></input>
+            </form> {% endcomment %}
+            <h2>Varified The Details Below </h2>
+           {% if data%}
+             <table width=100% style="border-color:#808080;" >
+             <form action={% url 'payment:convert_to_client' data.pk %} method="post">
+             {% csrf_token %}
+                                <tr>
+                                <th style="padding: 20px;">Client Name</th>
+                                <td style="padding: 20px;">{{ data.visitingcardcompanydata_agent_name }}</td>
+                                </tr>
+                                <tr>
+                                <th style="padding: 20px;">Client Address</th>
+                                <td style="padding: 20px;">{{ data.visitingcardcompanydata_company_address1}}</td>
+                                </tr>
+                                <tr>
+                                <th style="padding: 20px;">Client Email</th>
+                                <td style="padding: 20px;">{{ data.visitingcardcompanydata_email_id1 }}</td>
+                                </tr>
+                                <tr>
+                                <th style="padding: 20px;">Client Telephone</th>
+                                <td style="padding: 20px;">{{ data.visitingcardcompanydata_tel_number1 }}</td>
+                                </tr>
+                                <tr>
+                                <th style="padding: 20px;">Client Company Name</th>
+                                <td style="padding: 20px;">{{ data.visitingcardcompanydata_company_name }}</td>
+                                </tr>
+                                <tr>
+                                <th style="padding: 20px;">Client Website</th>
+                                <td style="padding: 20px;">{{ data.visitingcardcompanydata_company_website }}</td>
+                                </tr>
+                                <tr>
+                                 <td style="padding: 20px;"colspan=2><center><input type="submit" class="btn btn-info " value="Add To Client Master"></center></input></td>
+                                </tr>
+                                </form>
+                        </table>
+                        <hr>
+                        {% endif %}
+</div>
+{% endblock content %}
+{% block script %}
+<script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+
+{% endblock %}
+
+{% block extrascript %}
+<script type="text/javascript">
+ $(document).ready(function() {
+$('#test_table').DataTable({
+    orderCellsTop: true,
+    fixedHeader: false,
+    "lengthMenu": [ [-1], ["All"] ],
+
+ dom: 'Bfrtip',
+  buttons: [
+    'excelHtml5', 'csvHtml5'
+  ]
+});
+});
+{% endblock %}

@@ -1,0 +1,385 @@
+{% extends 'payment/base.html' %}
+{% load all_services_list_filters %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+{% endblock stylesheets %}
+{% block headscript %}
+<script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+{% endblock headscript %}
+{% block content %}
+<!-- Modal for CURD Operation -->
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content"></div>
+	</div>
+</div>
+<!-- Page Content -->
+<div id="content">
+	<div class="container-fluid">
+		<button type="button" id="sidebarCollapse" class="btn btn-info">
+			<i class="fas fa-align-left"></i>
+		</button>
+		<hr>
+		<h2>Vendors Services Details</h2>
+	<hr>
+		<div>
+			{% if vendor_pending %}
+			<table id="test_table">
+				<thead style="font-size:12px">
+					<tr>
+						<th class="text-center" scope="col">Sr. No.</th>
+                        {% if vendor_type == "All Services" %}
+						<th class="text-center" scope="col">Services In Package</th>
+                        {% else %}
+                        <th class="text-center" scope="col">Services</th>
+                        {% endif %}
+						<th class="text-center" scope="col">Service Number Of Passengers</th>
+						<th class="text-center" scope="col">Quote Per Head</th>
+						<th class="text-center" scope="col">Service ROE</th>
+						<th class="text-center" scope="col">Service GST</th>
+						<th class="text-center" scope="col">Service Total Amount</th>
+						<th class="text-center" scope="col">Service Payment Status</th>
+						<th class="text-center" scope="col">Service Payment Method</th>
+						<th class="text-center" scope="col">Update</th>
+						{% if user_role == 1 %}
+						<th class="text-center" scope="col">Delete</th>
+						{% endif %}
+					</tr>
+				</thead>
+				<tbody style="font-size:11px">
+					{% for vendor in vendor_pending %}
+					<tr>
+						<td class="text-center" scope="row">{{ forloop.counter }}</td>
+                        {% if vendor_type == "All Services"%}
+						<td class="text-center">{{ allservices_dict|get_item:vendor.pk }}</td>
+                         {% else %}
+                         <td class="text-center">{{ vendor_type }}</td>
+                        {% endif %}
+						<td class="text-center">{{ vendor.service_number_of_passengers }}</td>
+						<td class="text-center">{{ vendor.service_quote_per_head }}</td>
+						<td class="text-center">{{ vendor.service_roe }}</td>
+						<td class="text-center">{{ vendor.service_gst }}</td>
+						<td class="text-center">{{ vendor.service_total_amount }}</td>
+						<td class="text-center">{{ vendor.service_vendor_payment_status }}</td>
+						<td class="text-center">{{ vendor.service_payment_method }}</td>
+                        {% if vendor_type == "Air Ticket Service" %}
+						<td>
+							<button type="button" class="update_air_ticket btn btn-sm btn-primary" data-id="{% url 'payment:vendor_airticket_detail_update_new' vendor.pk %}">
+								<span class="fa fa-edit"></span>
+							</button>
+						</td>
+						{% if user_role == 1 %}
+						<td>
+							<button type="button" class="delete_air_ticket btn btn-sm btn-danger" data-id="{% url 'payment:vendor_airticket_detail_delete_new' vendor.pk %}">
+								<span class="fa fa-trash"></span>
+							</button>
+						</td>
+						{% endif %}
+						{% elif vendor_type == "Visa Cost Service" %}
+                         <td>
+                            <button type="button" class="update_visa_cost btn btn-sm btn-primary" data-id="{% url 'payment:vendor_visacost_detail_update_new' vendor.pk %}">
+                                <span class="fa fa-edit"></span>
+                            </button>
+                        </td>
+                        {% if user_role == 1 %}
+                        <td>
+                            <button type="button" class="delete_visa_cost btn btn-sm btn-danger" data-id="{% url 'payment:vendor_visacost_detail_delete_new' vendor.pk %}">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </td>  
+                        {% endif %}
+						{% elif vendor_type == "Hotel Quatation Service" %}
+                        <td>
+                            <button type="button" class="update_hotel btn btn-sm btn-primary" data-id="{% url 'payment:vendor_hotel_detail_update_new' vendor.pk %}">
+                                <span class="fa fa-edit"></span>
+                            </button>
+                        </td>
+                        {% if user_role == 1 %}
+                        <td>
+                            <button type="button" class="delete_hotel btn btn-sm btn-danger" data-id="{% url 'payment:vendor_hotel_detail_delete_new' vendor.pk %}">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </td>  
+                        {% endif %}
+                        {% elif vendor_type == "Restuarant Quatation Service" %}
+                         <td>
+                            <button type="button" class="update_restaurant btn btn-sm btn-primary" data-id="{% url 'payment:vendor_restaurant_detail_update_new' vendor.pk %}">
+                                <span class="fa fa-edit"></span>
+                            </button>
+                        </td>
+                        {% if user_role == 1 %}
+                        <td>
+                            <button type="button" class="delete_restaurant btn btn-sm btn-danger" data-id="{% url 'payment:vendor_restaurant_detail_delete_new' vendor.pk %}">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </td>  
+                        {% endif %}
+                        {% elif vendor_type == "Entrances Quatation Service" %}
+                        <td>
+                            <button type="button" class="update_entrances btn btn-sm btn-primary" data-id="{% url 'payment:vendor_entrances_detail_update_new' vendor.pk %}">
+                                <span class="fa fa-edit"></span>
+                            </button>
+                        </td>
+                        {% if user_role == 1 %}
+                        <td>
+                            <button type="button" class="delete_entrances btn btn-sm btn-danger" data-id="{% url 'payment:vendor_entrances_detail_delete_new' vendor.pk %}">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </td> 
+                        {% endif %}
+                        {% elif vendor_type == "SapSan Quatation Service" %} 
+                         <td>
+                            <button type="button" class="update_sapsan btn btn-sm btn-primary" data-id="{% url 'payment:vendor_sapsan_detail_update_new' vendor.pk %}">
+                                <span class="fa fa-edit"></span>
+                            </button>
+                        </td>
+                        {% if user_role == 1 %}
+                        <td>
+                            <button type="button" class="delete_sapsan btn btn-sm btn-danger" data-id="{% url 'payment:vendor_sapsan_detail_delete_new' vendor.pk %}">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </td>
+                        {% endif %}
+                        {% elif vendor_type == "Guide Service" %} 
+                         <td>
+                            <button type="button" class="update_guide btn btn-sm btn-primary" data-id="{% url 'payment:vendor_guide_detail_update_new' vendor.pk %}">
+                                <span class="fa fa-edit"></span>
+                            </button>
+                        </td>
+                        {% if user_role == 1 %}
+                        <td>
+                            <button type="button" class="delete_guide btn btn-sm btn-danger" data-id="{% url 'payment:vendor_guide_detail_delete_new' vendor.pk %}">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </td>
+                        {% endif %}
+                        {% elif vendor_type == "Transport Service" %} 
+                         <td>
+                            <button type="button" class="update_transport btn btn-sm btn-primary" data-id="{% url 'payment:vendor_transport_detail_update_new' vendor.pk %}">
+                                <span class="fa fa-edit"></span>
+                            </button>
+                        </td>
+                        {% if user_role == 1 %}
+                        <td>
+                            <button type="button" class="delete_transport btn btn-sm btn-danger" data-id="{% url 'payment:vendor_transport_detail_delete_new' vendor.pk %}">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </td>
+                        {% endif %}
+                        
+                        {% elif vendor_type == "All Services" %} 
+                         <td>
+                            <button type="button" class="update_allservices btn btn-sm btn-primary" data-id="{% url 'payment:vendorserviceupdate_new' vendor.pk %}">
+                                <span class="fa fa-edit"></span>
+                            </button>
+                        </td>
+                        {% if user_role == 1 %}
+                        <td>
+                            <button type="button" class="delete_allservices btn btn-sm btn-danger" data-id="{% url 'payment:vendorservicedelete_new' vendor.pk %}">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </td>
+                        {% endif %}  
+                        {% elif vendor_type == "Chef Service" %}  
+                                                <td>
+                            <button type="button" class="update_chef btn btn-sm btn-primary" data-id="{% url 'payment:vendor_chef_detail_update_new' vendor.pk %}">
+                                <span class="fa fa-edit"></span>
+                            </button>
+                        </td>
+                        {% if user_role == 1 %}
+                        <td>
+                            <button type="button" class="delete_chef btn btn-sm btn-danger" data-id="{% url 'payment:vendor_chef_detail_delete_new' vendor.pk %}">
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </td> 
+                        {% endif %}  
+                    {% endif %}  
+
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% else %}
+
+			<p class="no-leads text-primary">No entry added yet.</p>
+			
+			{% endif %}
+		</div>
+		<!--TEST TABLE ENDS HERE-->
+		
+	</div>
+</div>
+<!--PAGE CONTENT ENDS HERE-->
+{% endblock %}
+{% block script %}
+<script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+
+{% endblock %}
+
+{% block extrascript %}
+<script type="text/javascript">
+ $(document).ready(function() {
+$('#test_table').DataTable({
+	orderCellsTop: true,
+    fixedHeader: false,
+    "lengthMenu": [ [-1], ["All"] ],
+ dom: 'Bfrtip',
+  buttons: [
+    'excelHtml5', 'csvHtml5'
+  ]
+});
+});
+</script>
+<script type="text/javascript">
+    $(function() {
+        $(".update_air_ticket").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+        $(".delete_air_ticket").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function() {
+        $(".update_visa_cost").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+        $(".delete_visa_cost").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function() {
+        $(".update_hotel").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+        $(".delete_hotel").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function() {
+        $(".update_restaurant").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+        $(".delete_restaurant").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function() {
+        $(".update_entrances").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+        $(".delete_entrances").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function() {
+        $(".update_sapsan").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+        $(".delete_sapsan").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function() {
+        $(".update_guide").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+        $(".delete_guide").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function() {
+        $(".update_transport").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+        $(".delete_transport").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function() {
+        $(".update_chef").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+        $(".delete_chef").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function() {
+        $(".update_allservices").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+        $(".delete_allservices").each(function() {
+            $(this).modalForm({
+                formURL: $(this).data('id')
+            });
+        });
+    });
+</script>
+
+{% endblock %}
